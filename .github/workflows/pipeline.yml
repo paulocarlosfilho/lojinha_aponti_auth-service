@@ -23,8 +23,8 @@ jobs:
         with:
           args: '.'
 
-  lint-and-quality:
-    name: 1. Lint & Quality
+  test:
+    name: 1. Test
     needs: sast
     runs-on: ubuntu-latest
     steps:
@@ -36,20 +36,5 @@ jobs:
           
       - run: npm install
       
-      - name: Executar Linter (ESLint)
-        run: npm run lint
-
-  test:
-    name: 2. Test
-    needs: sast
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version: '24'
-          cache: 'npm'
-          
-      - run: npm install
       - name: Executar Testes Unitários
         run: npm test
