@@ -23,28 +23,9 @@ jobs:
         with:
           args: '.'
 
-  build:
-    name: 1. Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v5
-
-      - name: Configurar o Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: '24'
-          cache: 'npm'
-
-      - name: Instalar dependências
-        run: npm install
-
-      - name: Compilar o código
-        run: npm run build
-
   lint-and-quality:
-    name: 2. Lint & Quality
-    needs: build
+    name: 1. Lint & Quality
+    needs: sast
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -59,8 +40,8 @@ jobs:
         run: npm run lint
 
   test:
-    name: 3. Test
-    needs: build
+    name: 2. Test
+    needs: sast
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
